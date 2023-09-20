@@ -7,6 +7,10 @@ import { BsGithub, BsGoogle } from "react-icons/bs";
 import Input from "@/app/components/inputs/Input";
 import Button from "@/app/components/Button";
 import AuthSocialButton from "./AythSocialButton";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { signIn } from "next-auth/react";
+import { sign } from "crypto";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -38,13 +42,40 @@ const AuthForm = () => {
     setIsLoading(true);
 
     if (variant === "REGISTER") {
+      axios
+        .post("/api/register", data)
+        .catch(() => toast.error("Something went wrong"))
+        .finally(() => setIsLoading(false));
     }
     if (variant === "LOGIN") {
+      signIn("credentials", {
+        ...data,
+        redirect: false,
+      })
+        .then((callback) => {
+          if (callback?.error) {
+            toast.error("Invalid credentials");
+          }
+          if (callback?.ok && !callback?.error) {
+            toast.success("Success");
+          }
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
   const socialAction = (action: string) => {
     setIsLoading(true);
+    signIn(action, { redirect: false })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error("Invalid creentials");
+        }
+        if (callback?.ok && !callback?.error) {
+          toast.success("Success");
+        }
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -91,9 +122,9 @@ const AuthForm = () => {
           </div>
         </div>
         <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
-          <div className="">{variant === "LOGIN" ? "Вперше користуєтеся Sovet?" : "Вже є аккаунт?"}</div>
+          <div className="">{variant === "LOGIN" ? "Вперше користуєтесь Sovet?" : "Вже є аккаунт?"}</div>
           <div className="underline cursor-pointer" onClick={toggleVariant}>
-            {variant === "LOGIN" ? "Створити аккаунт" : ""}
+            {variant === "LOGIN" ? "Створити аккаунт" : "Увійти"}
           </div>
         </div>
       </div>
