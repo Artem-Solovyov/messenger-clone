@@ -7,9 +7,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Sovet",
   description: "Особистий простір для приватного спілкування компанії. ©️Sovet",
-  icons: {
-    icon: "/images/sovet.png", // /public path
-  },
+
   openGraph: {
     title: "SOVET",
     description: "Особистий простір для приватного спілкування компанії. ©️Sovet",
