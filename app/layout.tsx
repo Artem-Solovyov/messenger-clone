@@ -6,7 +6,30 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Sovet",
-  description: "Sovet Messenger",
+  description: "Особистий простір для приватного спілкування компанії. ©️Sovet",
+  icons: {
+    icon: "/images/sovet.png", // /public path
+  },
+  openGraph: {
+    title: "SOVET",
+    description: "Особистий простір для приватного спілкування компанії. ©️Sovet",
+    url: "https://messenger-clone-eta-dusky.vercel.app/",
+    siteName: "SOVET",
+    images: [
+      {
+        url: "https://messenger-clone-eta-dusky.vercel.app/images/sovet.png",
+        width: 800,
+        height: 600,
+      },
+      {
+        url: "https://messenger-clone-eta-dusky.vercel.app/images/sovet.png",
+        width: 1800,
+        height: 1600,
+        alt: "Sovet",
+      },
+    ],
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
